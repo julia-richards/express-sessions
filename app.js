@@ -6,6 +6,7 @@ const app = express();
 
 app.set('view engine', 'pug');
 
+
 app.use(session({
   store: new (store(session))(),
   secret: 'a5d63fc5-17a5-459c-b3ba-6d81792158fc',
@@ -20,27 +21,27 @@ app.use((req, res, next) => {
     req.session.history = history;
   }
   const url = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-  
+
   history.unshift(url);
-  
+
   next();
 });
 
 
 app.get('/', (req, res) => {
-  res.render('index', { 
+  res.render('index', {
     title: 'Home',
     history: req.session.history, });
 });
 
 app.get('/about', (req, res) => {
-  res.render('about', { 
+  res.render('about', {
     title: 'About',
     history: req.session.history, });
 });
 
 app.get('/contact', (req, res) => {
-  res.render('contact', { 
+  res.render('contact', {
     title: 'Contact',
     history: req.session.history, });
 });
